@@ -141,9 +141,49 @@ const schema = new GraphQLSchema({
   query: RootQueryType,
   mutation: RootMutationType,
 });
+
+// rest health check
+
 app.get("/", (req, res) => {
   res.send("server running 🏡");
 });
+
+// get all books using rest api
+app.get("/rest", (req, res) => {
+  res.send(books);
+});
+
+//get book by authorId
+app.get("/rest/byAuthorId", (req, res) => {
+  console.log(req.body.authorId);
+  const authorBooks = books.filter(
+    (book) => book.authorId === req.body.authorId
+  );
+  console.log(authorBooks);
+  res.send(authorBooks);
+});
+
+//get details of a book by name
+
+app.get("/rest/byBookName", (req, res) => {
+  console.log(req.body.name);
+  const namedBooks = books.filter((book) => book.name === req.body.name);
+  console.log(authorBooks);
+  res.send(authorBooks);
+});
+
+// create book with name and author id
+app.post("/rest/createBook", (req, res) => {
+  let newBook = {
+    name: req.body.name,
+    authorId: req.body.authorId,
+    id: books.length + 1,
+  };
+
+  books.push(newBook);
+  res.send(books);
+});
+
 app.use(
   "/graphql",
   expressGraphQL({
