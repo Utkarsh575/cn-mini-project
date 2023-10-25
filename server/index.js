@@ -48,7 +48,7 @@ const BookType = new GraphQLObjectType({
 
 const AuthorType = new GraphQLObjectType({
   name: "Author",
-  description: "This represents a author of a book",
+  description: "This represents the author of a book",
   fields: () => ({
     id: { type: GraphQLNonNull(GraphQLInt) },
     name: { type: GraphQLNonNull(GraphQLString) },
@@ -168,8 +168,8 @@ app.get("/rest/byAuthorId", (req, res) => {
 app.get("/rest/byBookName", (req, res) => {
   console.log(req.body.name);
   const namedBooks = books.filter((book) => book.name === req.body.name);
-  console.log(authorBooks);
-  res.send(authorBooks);
+  console.log(namedBooks);
+  res.send(namedBooks);
 });
 
 // create book with name and author id
